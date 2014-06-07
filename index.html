@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>making waves with html5</title>
+  
+  <meta name="keywords" content="html5, canvas, experiment">
+  <meta name="description" content="modern carpentry html5 canvas workshop">
+    
+    
+<link type="text/css" href="waveform_files/jquery-ui-1.css" rel="stylesheet">	
+    
+  <script src="waveform_files/processing.js" type="text/javascript" charset="utf-8"></script>
+  <script src="waveform_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" src="waveform_files/jquery-ui-1.js"></script>
+
+  <script src="waveform_files/waveform.js" type="text/javascript" charset="utf-8"></script>
+  <script src="waveform_files/PerlinNoise.js" type="text/javascript" charset="utf-8"></script>
+  <script src="waveform_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+
+  <style type="text/css" media="screen">
+    body {
+        background: #000;
+        color: #fff;
+        font-family: Helvetica, sans-serif;
+		margin:0;
+		padding:0;
+		overflow:hidden;
+    }
+
+	a {
+		text-decoration:none;
+		color: #991122;
+	}
+        
+    #old {
+	    font-family:Helvetica, Arial;
+	    position:absolute;			
+	    top:0px;
+	    left:20px;
+	    width:760px;
+	}
+    
+    #old h1 {
+	    display:block;
+	    font-family:Helvetica, Arial;
+	    font-size:30px;
+	    font-weight:bold;
+	    color:#fff;
+            margin:0 0 0 0;
+            padding:0;
+    }
+	
+    #old strong {
+	    display:block;
+	    font-size:16px;
+    }
+    
+    #checkcolor {
+      position:absolute;
+      top:10px;
+      left: 800px;
+      width:150px;
+    }
+    
+    #checkrect{
+      position:absolute;
+      top:10px;
+      left: 960px;
+      width:150px;      
+    }
+    
+	
+    #waves {
+    }
+    
+    #amplitude {
+        position:absolute;
+        top: 40px;
+        left:30px;
+        width: 150px;
+    }
+    
+    #wavelength {
+        position:absolute;
+        top: 40px;
+        left:190px;
+        width = 150px;
+    }
+
+    #mouseattract {
+        position:absolute;
+        top: 40px;
+        left:350px;
+        width = 150px;
+    }
+    
+    #noise {
+        position:absolute;
+        top: 40px;
+        left:510px;
+        width = 150px;
+    }
+
+    #cradius {
+        position:absolute;
+        top: 40px;
+        left:660px;
+        width = 150px;
+    }
+    
+    #ymeth {
+        position:absolute;
+        top: 40px;
+        left:810px;
+        width = 150px;      
+    }
+
+    #reqx {
+        position:absolute;
+        top: 40px;
+        left:1000px;
+        width = 150px;      
+    }
+    
+    #ampslider {
+        position:absolute;
+        top: 80px;
+        left:30px;
+        width:140px;
+    }
+
+
+    #waveslider {
+        position:absolute;
+        top: 80px;
+        left:190px;
+        width: 140px;
+    }
+
+    #mouseslider {
+        position:absolute;
+        top: 80px;
+        left:350px;
+        width: 140px;
+    }
+
+    #noiseslider {
+        position:absolute;
+        top: 80px;
+        left:510px;
+        width: 140px;
+    }
+
+    #cslider {
+        position:absolute;
+        top: 80px;
+        left:660px;
+        width: 140px;
+    }
+    
+
+    #ycombo {
+        position:absolute;
+        top: 80px;
+        left:810px;
+        width: 140px;
+    }
+    
+    #rcombo {
+        position:absolute;
+        top: 80px;
+        left:1000px;
+        width: 140px;
+    }    
+  </style>
+</head>
+<body style="cursor: auto;" class=" canvas rgba hsla multiplebgs borderimage borderradius boxshadow opacity cssanimations csscolumns no-cssgradients no-cssreflections csstransforms csstransitions">
+<script src="waveform_files/modernizr-0.js"></script>
+<canvas id="waves" width="1366" height="657"></canvas>
+
+<div id="checkcolor">
+  <input name="toggle color" id="ccolor" type="checkbox">toggle color
+</div>
+<div id="checkrect">
+  <input name="toggle shape" id="cshape" type="checkbox">toggle shape
+</div>
+
+<div id="amplitude">amplitude :294</div>
+<div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="ampslider"><a style="left: 98%;" class="ui-slider-handle ui-state-default ui-corner-all" href="#"></a></div>
+<div id="wavelength">wavelength :1041</div>
+<div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="waveslider"><a style="left: 76.2079%;" class="ui-slider-handle ui-state-default ui-corner-all" href="#"></a></div>
+<div id="mouseattract">mouse attract :115</div>
+<div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="mouseslider"><a style="left: 78.75%;" class="ui-slider-handle ui-state-default ui-corner-all" href="#"></a></div>
+<div id="noise">noise :166</div>
+<div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="noiseslider"><a style="left: 83%;" class="ui-slider-handle ui-state-default ui-corner-all" href="#"></a></div>
+<div id="cradius">width :29</div>
+<div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="cslider"><a style="left: 22.8814%;" class="ui-slider-handle ui-state-default ui-corner-all" href="#"></a></div>
+<div id="ymeth">y method : big in middle</div>
+<div id="ycombo">
+ <select id="yComboBox">
+
+     <option value="1">normal y amplitude</option>
+
+     <option value="2">big on the left amplitude</option>
+
+     <option value="3">big on the right amiplude</option>
+
+     <option selected="selected" value="4">big in the middle amplitude</option>
+  </select>
+</div>
+
+<div id="reqx">fill method : big on right</div>
+<div id="rcombo">
+ <select id="rComboBox">
+
+     <option value="1">normal fill</option>
+
+     <option value="2">big on the left fill</option>
+
+     <option selected="selected" value="3">big on the right fill</option>
+
+     <option value="4">big in the middle fill</option>
+  </select>
+</div>
+
+
+<div id="old"><h1>modern carpentry rides the html5 canvas wave</h1></div>
+
+
+
+
+</body></html>
